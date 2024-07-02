@@ -1,20 +1,12 @@
 'use client';
 
-import { Blockquote, Column, Footer, Header, Image, Paragraph } from '../../../lib/';
+import { Blockquote, Column, Embed, Footer, Header, Image, Paragraph, Audio } from '../../../lib/';
 
 export default function Home() {
-  const parser = new DOMParser();
-  const data = '<blockquote blockquote > <cite>Disse Andrade.</cite></blockquote>';
-
   return (
     <div className="w-full">
-      <Image
-        url={'block.props.source'}
-        captionClass="!font-light my-1"
-        figureClass="!my-1"
-        imagesClasses="!my-1"
-        alt={"block?.props?.caption ?? block?.props?.alt ?? ''"}
-      ></Image>
+      <Audio url="https://static.casapino.com.br/casapino/2024/06/27173603/soul-of-the-sun-179325.mp3" controls></Audio>
+      <Embed url="https://www.youtube.com/embed/GHhAifvMJLc"></Embed>
     </div>
   );
 }
