@@ -49,7 +49,10 @@ export default function Image({
           <ImageTag></ImageTag>
         )}
         {caption && (
-          <figcaption className={classNames(captionClass, 'text-left text-sm font-thin')}>{caption}</figcaption>
+          <figcaption
+            className={classNames(captionClass, 'text-left text-sm font-thin')}
+            dangerouslySetInnerHTML={{ __html: caption }}
+          ></figcaption>
         )}
       </>
     );
