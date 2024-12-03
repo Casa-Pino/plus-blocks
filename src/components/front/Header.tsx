@@ -346,7 +346,7 @@ export default function Header({
                     {x.isOpen && x?.children != null && (
                       <div
                         className={classnames(
-                          'absolute top-10 left-0 z-20 flex flex-shrink-0 flex-col gap-2 space-y-2 bg-black p-4 ',
+                          'absolute top-10 left-0 z-50 flex max-h-[500px] flex-shrink-0 flex-col gap-2 space-y-2 overflow-y-scroll bg-black p-4',
                           className?.dialogClass,
                         )}
                         style={{
