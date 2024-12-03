@@ -302,7 +302,8 @@ export default function Header({
                   <div
                     key={y}
                     className="relative"
-                    onMouseLeave={() => {
+                    onMouseLeave={(e) => {
+                      e.stopPropagation();
                       changeOpenByIndex(y, false);
                     }}
                   >
@@ -317,9 +318,9 @@ export default function Header({
                       onClick={() => {
                         changeOpenByIndex(y, !x.isOpen);
                       }}
-                      onMouseEnter={() => {
-                        changeOpenByIndex(y, true);
-                      }}
+                      // onMouseEnter={() => {
+                      //   changeOpenByIndex(y, true);
+                      // }}
                     >
                       {x.title}{' '}
                       {x?.children != null && (
@@ -349,6 +350,10 @@ export default function Header({
                           'absolute top-10 left-0 z-50 flex max-h-[500px] flex-shrink-0 flex-col gap-2 space-y-2 overflow-y-scroll bg-black p-4',
                           className?.dialogClass,
                         )}
+                        onMouseLeave={(e) => {
+                          e.stopPropagation();
+                          changeOpenByIndex(y, false);
+                        }}
                         style={{
                           backgroundColor:
                             theme == 'dark' ? backgroundColorD ?? '#000000E5' : backgroundColorL ?? 'bg-white',
