@@ -289,7 +289,7 @@ export default function Header({
             </div>
           </div>
 
-          <div className="lg:flex-0 flex items-center">
+          <div className="lg:flex-0 flex items-center gap-4">
             <a href="/" className="">
               <span className="sr-only">Your Company</span>
               <img className="h-[42px] w-auto" src={theme == 'dark' ? darkLogo : lightLogo} alt="" />
