@@ -423,7 +423,7 @@ export default function Header({
           <div
             className={classnames(
               `absolute  ${
-                isOpenMobile ? 'z-10' : '-z-10'
+                isOpenMobile ? 'z-[100]' : '-z-10'
               }  overflow-y-auto duration-300 ease-in-out sm:w-1/3 sm:ring-1 sm:ring-gray-900/10 md:w-1/3 lg:w-1/4 sm-mw:w-10/12`,
               className?.dialogClass,
             )}
