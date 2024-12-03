@@ -302,10 +302,10 @@ export default function Header({
                   <div
                     key={y}
                     className="relative"
-                    onMouseLeave={(e) => {
-                      e.stopPropagation();
-                      changeOpenByIndex(y, false);
-                    }}
+                    // onMouseLeave={(e) => {
+                    //   e.stopPropagation();
+                    //   changeOpenByIndex(y, false);
+                    // }}
                   >
                     <a
                       href={x?.children == null ? x.href : null}
