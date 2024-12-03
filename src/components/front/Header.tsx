@@ -8,6 +8,7 @@ export interface IRoutesChildren {
   title: string;
   href: string;
   children?: IRoutesChildren[];
+  isOpen?: boolean;
 }
 export interface IRoutes {
   title: string;
@@ -35,6 +36,7 @@ export interface IHeader {
   backgroundColorD: string;
   placeholderColor: string;
   borderHeight?: number;
+  newHeaderDesktop?: boolean;
 }
 export interface IClassName {
   textClass?: string;
@@ -42,6 +44,7 @@ export interface IClassName {
   buttonClass?: string;
   dialogClass?: string;
   linkClass?: string;
+  textClassDesktop?: string;
 }
 const themeClasses = {
   dark: 'bg-black',
@@ -67,6 +70,7 @@ export default function Header({
   placeholderColor,
   borderHeight = 1,
   iconColor,
+  newHeaderDesktop = false,
 }: IHeader) {
   const classes = classnames(theme !== 'none' ? themeClasses[theme || 'light'] : 'light', className?.headerClass || '');
   const loadingClasses = classnames(themeLoadingClasses[theme || 'light']);
@@ -214,6 +218,17 @@ export default function Header({
     );
   }
 
+  function changeOpenByIndex(index: number, active: boolean = true) {
+    let routesStateCopy = routesState;
+    if (routesStateCopy[index].children == null) return;
+
+    routesStateCopy = routesStateCopy.map((x) => ({ ...x, isOpen: false }));
+
+    routesStateCopy[index].isOpen = active;
+
+    setRoutesState([...routesStateCopy]);
+  }
+
   return (
     <>
       <header className={classnames(classes)}>
@@ -224,7 +239,7 @@ export default function Header({
             maxWidth: '1440px',
           }}
         >
-          <div className="flex w-14">
+          <div className={`flex w-14 ${newHeaderDesktop ? 'md:hidden' : ''}`}>
             <button
               type="button"
               onClick={() => {
@@ -274,19 +289,129 @@ export default function Header({
             </div>
           </div>
 
-          <div className="lg:flex-0 flex">
+          <div className="lg:flex-0 flex items-center">
             <a href="/" className="">
               <span className="sr-only">Your Company</span>
               <img className="h-[42px] w-auto" src={theme == 'dark' ? darkLogo : lightLogo} alt="" />
             </a>
+            <div
+              className={`hidden items-center justify-center gap-6 transition-all ${newHeaderDesktop ? 'md:flex' : ''}`}
+            >
+              {routesState.map((x, y) => {
+                return (
+                  <div
+                    key={y}
+                    className="relative"
+                    onMouseLeave={() => {
+                      changeOpenByIndex(y, false);
+                    }}
+                  >
+                    <a
+                      href={x?.children == null ? x.href : null}
+                      className={classnames(
+                        `flex cursor-pointer items-center p-2 hover:text-white ${
+                          x.isOpen ? 'text-white' : ''
+                        } transition-all`,
+                        className?.textClassDesktop,
+                      )}
+                      onClick={() => {
+                        changeOpenByIndex(y, !x.isOpen);
+                      }}
+                      onMouseEnter={() => {
+                        changeOpenByIndex(y, true);
+                      }}
+                    >
+                      {x.title}{' '}
+                      {x?.children != null && (
+                        <svg
+                          width={22}
+                          height={22}
+                          className={`mx-3 flex-none text-[${focusColor ?? 'gray-400'}] transition-all`}
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                          aria-hidden="true"
+                          style={{
+                            rotate: x.isOpen ? '180deg' : 'none',
+                            color: x.isOpen ? 'white' : 'black',
+                          }}
+                        >
+                          <path
+                            fill-rule="evenodd"
+                            d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                            clip-rule="evenodd"
+                          />
+                        </svg>
+                      )}
+                    </a>
+                    {x.isOpen && x?.children != null && (
+                      <div
+                        className={classnames(
+                          'absolute top-10 left-0 z-20 flex flex-shrink-0 flex-col gap-2 space-y-2 bg-black p-4 ',
+                          className?.dialogClass,
+                        )}
+                        style={{
+                          backgroundColor:
+                            theme == 'dark' ? backgroundColorD ?? '#000000E5' : backgroundColorL ?? 'bg-white',
+                        }}
+                      >
+                        {x?.children?.map((x, y) => {
+                          return (
+                            <a
+                              href={x.href}
+                              className={classnames(
+                                `block cursor-pointer whitespace-nowrap rounded-lg text-sm font-normal leading-7 ${
+                                  theme == 'dark' ? 'text-white' : 'text-gray-900 '
+                                } transition-all`,
+                                loadingClasses,
+                                className?.linkClass,
+                              )}
+                              key={y}
+                            >
+                              {x.title}
+                            </a>
+                          );
+                        })}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
           </div>
 
-          <div className="flex h-4 w-14 lg:justify-end">
-            {haveLogin ? (
+          {haveLogin ? (
+            <div className="flex h-4 w-14 lg:justify-end">
               <a href="#" className={classnames('text-sm font-semibold leading-6', loadingClasses)}></a>
-            ) : (
               <span></span>
-            )}
+            </div>
+          ) : (
+            <></>
+          )}
+
+          <div className={`ml-2 h-6 w-6 `}>
+            <button
+              type="button"
+              className={`h-6 w-6 ${newHeaderDesktop ? 'hidden md:flex' : 'hidden'}`}
+              onClick={() => {
+                setIsSearchEnable(!isSearchEnable);
+              }}
+            >
+              <span className="sr-only">Open main menu</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                x="0px"
+                y="0px"
+                width="19"
+                height="19"
+                viewBox="0 0 50 50"
+                stroke={!iconColor ? (theme == 'dark' ? 'white' : 'currentColor') : iconColor}
+              >
+                <path
+                  d="M 21 3 C 11.601563 3 4 10.601563 4 20 C 4 29.398438 11.601563 37 21 37 C 24.355469 37 27.460938 36.015625 30.09375 34.34375 L 42.375 46.625 L 46.625 42.375 L 34.5 30.28125 C 36.679688 27.421875 38 23.878906 38 20 C 38 10.601563 30.398438 3 21 3 Z M 21 7 C 28.199219 7 34 12.800781 34 20 C 34 27.199219 28.199219 33 21 33 C 13.800781 33 8 27.199219 8 20 C 8 12.800781 13.800781 7 21 7 Z"
+                  fill={!iconColor ? (theme == 'dark' ? 'white' : 'currentColor') : iconColor}
+                ></path>
+              </svg>
+            </button>
           </div>
         </nav>
         <div role="dialog" aria-modal="true" className="relative">
