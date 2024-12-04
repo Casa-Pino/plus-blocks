@@ -393,10 +393,54 @@ export default function Header({
             <></>
           )}
 
-          <div className={`ml-2 h-6 w-6 `}>
+          <div className={`relative ml-2 flex h-6 w-6 items-center`}>
+            <div className="relative">
+              <div
+                className={classnames(
+                  `absolute right-8 z-[100] w-full overflow-y-auto duration-300 ease-in-out sm:w-1/3 sm:ring-1 sm:ring-gray-900/10 md:w-1/3 lg:w-1/4 sm-mw:!w-full ${
+                    newHeaderDesktop ? 'block' : 'hidden'
+                  } origin-right -translate-y-1/2`,
+                  // className?.dialogClass,
+                  isSearchEnable ? 'scale-x-100' : 'scale-x-0',
+                )}
+                style={{
+                  width: 'max-content',
+                  height: '40px',
+                  // backgroundColor: theme == 'dark' ? backgroundColorD ?? '#000000E5' : backgroundColorL ?? 'bg-white',
+                }}
+              >
+                <form
+                  className={`relative h-full w-full transition-all md:max-w-xs `}
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    let searched = searchText;
+                    setIsSearchEnable(false);
+                    setSearchText('');
+                    if (searchText != null) return onSubmit(searched);
+                  }}
+                >
+                  <input
+                    className={classnames(
+                      'h-full w-full rounded-md px-4 focus-visible:outline-none',
+                      `placeholder:text-primary`,
+                    )}
+                    type="text"
+                    name="search"
+                    placeholder="Buscar"
+                    onChange={(e) => {
+                      setSearchText(e.target.value);
+                    }}
+                    style={{
+                      // backgroundColor: theme == 'dark' ? backgroundColorD : backgroundColorL,
+                      color: placeholderColor,
+                    }}
+                  />
+                </form>
+              </div>
+            </div>
             <button
               type="button"
-              className={`h-6 w-6 ${newHeaderDesktop ? 'hidden md:flex' : 'hidden'}`}
+              className={`h-6 w-6 ${newHeaderDesktop ? 'hidden md:flex' : 'hidden'} relative`}
               onClick={() => {
                 setIsSearchEnable(!isSearchEnable);
               }}
@@ -482,7 +526,9 @@ export default function Header({
             className={classnames(
               `absolute  ${
                 isSearchEnable ? 'z-10' : '-z-10'
-              }  w-full overflow-y-auto duration-300 ease-in-out sm:w-1/3 sm:ring-1 sm:ring-gray-900/10 md:w-1/3 lg:w-1/4 sm-mw:!w-full`,
+              }  w-full overflow-y-auto duration-300 ease-in-out sm:w-1/3 sm:ring-1 sm:ring-gray-900/10 md:w-1/3 lg:w-1/4 sm-mw:!w-full ${
+                newHeaderDesktop ? 'md:hidden' : ''
+              }`,
               className?.dialogClass,
             )}
             style={{
