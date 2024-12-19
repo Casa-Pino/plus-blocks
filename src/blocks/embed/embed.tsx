@@ -27,6 +27,8 @@ export default function Embed({ width, height, url, caption, title, classnames }
     }
   }, [url]);
 
+  useEffect(() => {}, []);
+
   function getTwiiter() {
     fetch(`https://publish.twitter.com/oembed?url=${url}`)
       .then((x) => x.json())
@@ -70,7 +72,7 @@ export default function Embed({ width, height, url, caption, title, classnames }
           <YouTube
             videoId={getId(url)}
             id={'youtube-video'}
-            iframeClassName={'youtube-video'}
+            iframeClassName={'youtube-video !w-full'}
             style={{
               width: width || '560px',
               height: height || '315px',
