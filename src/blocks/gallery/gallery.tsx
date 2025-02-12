@@ -1,9 +1,6 @@
 'use client';
 
 import classNames from 'classnames';
-import ImageGallery from 'react-image-gallery';
-
-import 'react-image-gallery/styles/css/image-gallery.css';
 
 interface IGallery {
   images: IImage[];
@@ -20,18 +17,7 @@ interface IImage {
 
 export default function Gallery({ images, type = 'grid' }: IGallery) {
   return type == 'gallery' ? (
-    <ImageGallery
-      items={images.map((x) => ({
-        original: x.url,
-        thumbnail: x.url,
-        originalAlt: x.alt,
-        originalTitle: x.caption,
-        thumbnailAlt: x.alt,
-        thumbnailTitle: x.caption,
-        description: x.caption,
-      }))}
-      lazyLoad
-    />
+    <></>
   ) : (
     <figure className="flex flex-wrap">
       {images.map((x, y) => {
