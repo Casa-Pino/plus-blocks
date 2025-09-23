@@ -25,8 +25,8 @@ export default function Gallery({ images, type = 'grid' }: IGallery) {
           <figure
             key={y}
             className="max-[650px]:w-full min-[650px]:w-2/6 relative box-border flex max-w-full flex-col justify-center"
-            dangerouslySetInnerHTML={{ __html: x.dangerous }}
           >
+            <span dangerouslySetInnerHTML={{ __html: x.dangerous }}></span>
             {x.caption && (
               <figcaption
                 className={

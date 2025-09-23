@@ -98,7 +98,8 @@ export default function Button({
     </>
   );
   return asLink ? (
-    <a href={link} className={classes} target={target} rel={rel} dangerouslySetInnerHTML={{ __html: dangerously }}>
+    <a href={link} className={classes} target={target} rel={rel}>
+      <span dangerouslySetInnerHTML={{ __html: dangerously }}></span>
       {buttonChildren}
     </a>
   ) : (
@@ -107,8 +108,8 @@ export default function Button({
       className={classes}
       onClick={onClick}
       disabled={disabled}
-      dangerouslySetInnerHTML={{ __html: dangerously || '' }}
     >
+      <span dangerouslySetInnerHTML={{ __html: dangerously }}></span>
       {dangerously ? null : buttonChildren}
     </button>
   );
