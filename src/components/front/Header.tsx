@@ -32,6 +32,8 @@ export interface IHeader {
   iconColor: string;
   focusColor: string;
   unFocusColor: string;
+  desktopFocusColor: string;
+  desktopUnFocusColor: string;
   backgroundColorL: string;
   backgroundColorD: string;
   placeholderColor: string;
@@ -65,6 +67,8 @@ export default function Header({
   onSubmit,
   focusColor = '#00DFEB',
   unFocusColor = '',
+  desktopFocusColor = 'white',
+  desktopUnFocusColor = 'black',
   backgroundColorL,
   backgroundColorD,
   placeholderColor,
@@ -101,8 +105,7 @@ export default function Header({
               setRoutesState([...routesData]);
             }}
             className={classnames(
-              ` block cursor-pointer text-base font-semibold leading-7 ${
-                theme == 'dark' ? 'text-white ' : 'text-gray-900 '
+              ` block cursor-pointer text-base font-semibold leading-7 ${theme == 'dark' ? 'text-white ' : 'text-gray-900 '
               } `,
               className?.buttonClass,
             )}
@@ -111,8 +114,7 @@ export default function Header({
           >
             <span
               className={classnames(
-                `flex text-base leading-7 ${
-                  theme == 'dark' ? 'text-white' : 'text-gray-900'
+                `flex text-base leading-7 ${theme == 'dark' ? 'text-white' : 'text-gray-900'
                 } items-center justify-between font-normal`,
                 className?.linkClass,
               )}
@@ -163,8 +165,7 @@ export default function Header({
         ) : (
           <a
             className={classnames(
-              `block cursor-pointer text-base font-normal leading-7 ${
-                theme == 'dark' ? 'text-white' : 'text-gray-900'
+              `block cursor-pointer text-base font-normal leading-7 ${theme == 'dark' ? 'text-white' : 'text-gray-900'
               }`,
               className?.linkClass,
             )}
@@ -197,8 +198,7 @@ export default function Header({
               key={z}
               href={y.href}
               className={classnames(
-                `block cursor-pointer rounded-lg py-2 pl-6 pr-3 text-sm font-normal leading-7 ${
-                  theme == 'dark' ? 'text-white' : 'text-gray-900 '
+                `block cursor-pointer rounded-lg py-2 pl-6 pr-3 text-sm font-normal leading-7 ${theme == 'dark' ? 'text-white' : 'text-gray-900 '
                 }`,
                 loadingClasses,
                 className?.linkClass,
@@ -302,38 +302,40 @@ export default function Header({
                   <div
                     key={y}
                     className="relative"
-                    // onMouseLeave={(e) => {
-                    //   e.stopPropagation();
-                    //   changeOpenByIndex(y, false);
-                    // }}
+                  // onMouseLeave={(e) => {
+                  //   e.stopPropagation();
+                  //   changeOpenByIndex(y, false);
+                  // }}
                   >
                     <a
                       href={x?.children == null ? x.href : null}
                       className={classnames(
-                        `flex cursor-pointer items-center p-2 hover:text-white ${
-                          x.isOpen ? 'text-white' : ''
+                        `flex cursor-pointer items-center p-2 hover:text-white ${x.isOpen ? 'text-white' : ''
                         } transition-all`,
                         className?.textClassDesktop,
                       )}
                       onClick={() => {
                         changeOpenByIndex(y, !x.isOpen);
                       }}
-                      // onMouseEnter={() => {
-                      //   changeOpenByIndex(y, true);
-                      // }}
+                    // onMouseEnter={() => {
+                    //   changeOpenByIndex(y, true);
+                    // }}
                     >
                       {x.title}{' '}
                       {x?.children != null && (
                         <svg
                           width={22}
                           height={22}
-                          className={`mx-3 flex-none text-[${focusColor ?? 'gray-400'}] transition-all`}
+                          className={classnames(
+                            `mx-3 flex-none text-[${focusColor ?? 'gray-400'}] transition-all`,
+                            className?.textClassDesktop
+                          )}
                           viewBox="0 0 20 20"
                           fill="currentColor"
                           aria-hidden="true"
                           style={{
                             rotate: x.isOpen ? '180deg' : 'none',
-                            color: x.isOpen ? 'white' : 'black',
+                            color: x.isOpen ? desktopFocusColor : desktopUnFocusColor,
                           }}
                         >
                           <path
@@ -364,8 +366,7 @@ export default function Header({
                             <a
                               href={x.href}
                               className={classnames(
-                                `block cursor-pointer whitespace-nowrap rounded-lg text-sm font-normal leading-7 ${
-                                  theme == 'dark' ? 'text-white' : 'text-gray-900 '
+                                `block cursor-pointer whitespace-nowrap rounded-lg text-sm font-normal leading-7 ${theme == 'dark' ? 'text-white' : 'text-gray-900 '
                                 } transition-all`,
                                 loadingClasses,
                                 className?.linkClass,
@@ -397,8 +398,7 @@ export default function Header({
             <div className="relative">
               <div
                 className={classnames(
-                  `absolute right-8 z-[100] w-full overflow-y-auto duration-300 ease-in-out sm:w-1/3 sm:ring-1 sm:ring-gray-900/10 md:w-1/3 lg:w-1/4 sm-mw:!w-full ${
-                    newHeaderDesktop ? 'block' : 'hidden'
+                  `absolute right-8 z-[100] w-full overflow-y-auto duration-300 ease-in-out sm:w-1/3 sm:ring-1 sm:ring-gray-900/10 md:w-1/3 lg:w-1/4 sm-mw:!w-full ${newHeaderDesktop ? 'block' : 'hidden'
                   } origin-right -translate-y-1/2`,
                   // className?.dialogClass,
                   isSearchEnable ? 'scale-x-100' : 'scale-x-0',
@@ -466,8 +466,7 @@ export default function Header({
         <div role="dialog" aria-modal="true" className="relative">
           <div
             className={classnames(
-              `absolute  ${
-                isOpenMobile ? 'z-[100]' : '-z-10'
+              `absolute  ${isOpenMobile ? 'z-[100]' : '-z-10'
               }  overflow-y-auto duration-300 ease-in-out sm:w-1/3 sm:ring-1 sm:ring-gray-900/10 md:w-1/3 lg:w-1/4 sm-mw:w-10/12`,
               className?.dialogClass,
             )}
@@ -524,10 +523,8 @@ export default function Header({
         <div role="dialog" aria-modal="true" className="relative">
           <div
             className={classnames(
-              `absolute  ${
-                isSearchEnable ? 'z-10' : '-z-10'
-              }  w-full overflow-y-auto duration-300 ease-in-out sm:w-1/3 sm:ring-1 sm:ring-gray-900/10 md:w-1/3 lg:w-1/4 sm-mw:!w-full ${
-                newHeaderDesktop ? 'md:hidden' : ''
+              `absolute  ${isSearchEnable ? 'z-10' : '-z-10'
+              }  w-full overflow-y-auto duration-300 ease-in-out sm:w-1/3 sm:ring-1 sm:ring-gray-900/10 md:w-1/3 lg:w-1/4 sm-mw:!w-full ${newHeaderDesktop ? 'md:hidden' : ''
               }`,
               className?.dialogClass,
             )}
