@@ -1,3 +1,4 @@
-import GpHitFunc from './GpHit';
+// Scripts components exports
+// GpHit removed - no longer used
 
-export { GpHitFunc };
+export {};
