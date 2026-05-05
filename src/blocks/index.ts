@@ -24,6 +24,8 @@ import Column from './columns/column';
 import ShortCodeBlock from './code/ShortCodeBlock';
 import ContentHTMLBlock from './code/ContentHTMLBlock';
 import Button from './button/button';
+import FaqList from './faqlist/faqlist';
+import Sponsors from './sponsors/sponsors';
 
 export {
   Paragraph,
@@ -50,4 +52,6 @@ export {
   ShortCodeBlock,
   ContentHTMLBlock,
   Button,
+  FaqList,
+  Sponsors,
 };
